@@ -28,6 +28,6 @@ jobs:
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       id: extract_branch
     - name: Analyze with NextGen Static Analysis
-      run: .\sl analyze --strict --app Test_C_Plus --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --c .
+      run: .\sl analyze --wait --app Test_C_Plus --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --c --cpg .
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
