@@ -19,10 +19,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
     - name: Download Qwiet CLI
       run: |
         Invoke-WebRequest -Uri 'https://cdn.shiftleft.io/download/sl-latest-windows-x64.zip' -OutFile sl.zip
@@ -34,6 +30,6 @@ jobs:
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       id: extract_branch
     - name: Analyze with NextGen Static Analysis
-      run: .\sl analyze --strict --app Test_C_Plus --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --c 
+      run: .\sl analyze --strict --app Test_C_Plus --tag branch=${{ github.head_ref || steps.extract_branch.outputs.branch }} --c .
       env:
         SHIFTLEFT_ACCESS_TOKEN: ${{ secrets.SHIFTLEFT_ACCESS_TOKEN }}
